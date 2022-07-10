@@ -1,30 +1,9 @@
-import 'dart:convert' show json;
 import 'package:stacked/stacked.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_tech_task/ui/views/list_page/list_page_viewmodel.dart';
 
-class ListPageView extends StatefulWidget {
+class ListPageView extends StatelessWidget {
   const ListPageView({Key? key}) : super(key: key);
-
-  @override
-  State<ListPageView> createState() => _ListPageViewState();
-}
-
-class _ListPageViewState extends State<ListPageView> {
-  List<dynamic> posts = [];
-
-  @override
-  void initState() {
-    super.initState();
-    http
-        .get(Uri.parse('https://jsonplaceholder.typicode.com/posts/'))
-        .then((response) {
-      setState(() {
-        posts = json.decode(response.body);
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +14,11 @@ class _ListPageViewState extends State<ListPageView> {
               title: const Text("List of posts"),
             ),
             body: ListView(
-              children: posts.map((post) {
+              children: model.posts.map((post) {
                 return InkWell(
                   onTap: () {
                     Navigator.of(context)
-                        .pushNamed('details/', arguments: {'id': post['id']});
+                        .pushNamed('details/', arguments: {'id': post.id ?? 0});
                   },
                   child: Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
@@ -47,10 +26,10 @@ class _ListPageViewState extends State<ListPageView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          post['title'],
+                          post.title ?? '',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(post['body']),
+                        Text(post.body ?? ''),
                         Container(height: 10),
                         const Divider(
                           thickness: 1,
@@ -64,6 +43,9 @@ class _ListPageViewState extends State<ListPageView> {
             ),
           );
         },
-        viewModelBuilder: () => ListPageViewModel());
+        viewModelBuilder: () => ListPageViewModel(),
+        onModelReady: (model) {
+          model.fetchPosts();
+        });
   }
 }

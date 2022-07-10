@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tech_task/services/locator.dart';
 import 'package:flutter_tech_task/ui/views/details_page/details_page_view.dart';
 import 'package:flutter_tech_task/ui/views/list_page/list_page_view.dart';
 
 void main() {
+  setupLocator();
   runApp(const MyApp());
 }
 
