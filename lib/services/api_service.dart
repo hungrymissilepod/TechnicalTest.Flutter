@@ -13,4 +13,10 @@ class APIService {
     Iterable iterable = json.decode(response.body);
     return List<Post>.from(iterable.map((model) => Post.fromJson(model)));
   }
+
+  Future<Post> fetchPost(int id) async {
+    Response response = await http
+        .get(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'));
+    return Post.fromJson(json.decode(response.body));
+  }
 }
