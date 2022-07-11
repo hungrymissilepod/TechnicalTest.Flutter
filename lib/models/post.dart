@@ -6,7 +6,7 @@ class Post {
   int? id;
 
   factory Post.fromJson(dynamic data) {
-    return Post(data['title'] ?? '', data['body'] ?? '', data['id'] ?? 0);
+    return Post(data['title'], data['body'], data['id']);
   }
 
   Map<String, dynamic> toJson() {

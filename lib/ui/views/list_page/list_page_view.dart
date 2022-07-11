@@ -8,44 +8,49 @@ class ListPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ListPageViewModel>.reactive(
-        builder: (context, model, child) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("List of posts"),
-            ),
-            body: ListView(
-              children: model.posts.map((post) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushNamed('details/', arguments: {'id': post.id ?? 0});
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          post.title ?? '',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(post.body ?? ''),
-                        Container(height: 10),
-                        const Divider(
-                          thickness: 1,
-                          color: Colors.grey,
-                        )
-                      ],
-                    ),
+      viewModelBuilder: () => ListPageViewModel(),
+      onModelReady: (model) {
+        model.fetchAllPosts();
+      },
+      builder: (context, model, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("List of posts"),
+          ),
+          body: ListView(
+            children: model.posts.map((post) {
+              return InkWell(
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed('details/', arguments: {'id': post.id ?? 0});
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 10),
+                      Text(
+                        post.title ?? '',
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        post.body ?? '',
+                      ),
+                      const SizedBox(height: 10),
+                      const Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      )
+                    ],
                   ),
-                );
-              }).toList(),
-            ),
-          );
-        },
-        viewModelBuilder: () => ListPageViewModel(),
-        onModelReady: (model) {
-          model.fetchPosts();
-        });
+                ),
+              );
+            }).toList(),
+          ),
+        );
+      },
+    );
   }
 }

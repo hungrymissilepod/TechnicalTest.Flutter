@@ -81,6 +81,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  functional_listener:
+    dependency: transitive
+    description:
+      name: functional_listener
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   get_it:
     dependency: "direct main"
     description:
@@ -88,6 +95,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.2.0"
+  get_it_mixin:
+    dependency: "direct main"
+    description:
+      name: get_it_mixin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.4"
   http:
     dependency: "direct main"
     description:
@@ -235,4 +249,4 @@ packages:
     version: "2.1.2"
 sdks:
   dart: ">=2.17.0-0 <3.0.0"
-  flutter: ">=1.16.0"
+  flutter: ">=2.0.0"
