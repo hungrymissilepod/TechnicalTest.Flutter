@@ -1,4 +1,6 @@
 import 'package:flutter_tech_task/providers/saved_posts_provider.dart';
+import 'package:flutter_tech_task/ui/views/details_page/save_button_widget.dart';
+import 'package:flutter_tech_task/ui/views/details_page/view_comments_button_widget.dart';
 import 'package:flutter_tech_task/ui/views/list_page/post_tile_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -17,7 +19,7 @@ class _DetailsPageViewState extends State<DetailsPageView> {
   Widget build(BuildContext context) {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
-    final postId = args!['id'];
+    final int postId = args!['id'] ?? 0;
     return ViewModelBuilder<DetailsPageViewModel>.reactive(
       viewModelBuilder: () => DetailsPageViewModel(),
       onModelReady: (model) {
@@ -43,73 +45,14 @@ class _DetailsPageViewState extends State<DetailsPageView> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                TextButton(
-                                  child: const Text('View Comments'),
-                                  onPressed: () {
-                                    Navigator.of(context).pushNamed('comments/',
-                                        arguments: {'id': postId ?? 0});
-                                  },
-                                  style: ButtonStyle(
-                                    overlayColor:
-                                        MaterialStateColor.resolveWith(
-                                            (states) =>
-                                                Colors.blue.withOpacity(0.2)),
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        side: const BorderSide(
-                                            color: Colors.blue),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                ViewCommentsButton(postId: postId),
                                 Consumer<SavedPosts>(
                                   builder: (context, prefs, child) {
                                     bool? hasPost =
                                         prefs.isPostAlredySaved(model.post?.id);
-                                    return TextButton(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            hasPost
-                                                ? 'Saved'
-                                                : 'Save For Offline',
-                                            style: const TextStyle(
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 5),
-                                          Icon(
-                                            hasPost
-                                                ? Icons.check
-                                                : Icons.download,
-                                            color: Colors.red,
-                                          ),
-                                        ],
-                                      ),
-                                      onPressed: () {
-                                        context
-                                            .read<SavedPosts>()
-                                            .addSavedPost(model.post!);
-                                      },
-                                      style: ButtonStyle(
-                                        overlayColor:
-                                            MaterialStateColor.resolveWith(
-                                                (states) => Colors.red
-                                                    .withOpacity(0.2)),
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            side: const BorderSide(
-                                                color: Colors.red),
-                                          ),
-                                        ),
-                                      ),
+                                    return SaveButton(
+                                      post: model.post,
+                                      hasPost: hasPost,
                                     );
                                   },
                                 ),
