@@ -12,7 +12,7 @@ class APIService {
     Response response = await http
         .get(Uri.parse('https://jsonplaceholder.typicode.com/posts/'));
     Iterable iterable = json.decode(response.body);
-    return List<Post>.from(iterable.map((model) => Post.fromJson(model)));
+    return List<Post>.from(iterable.map((e) => Post.fromJson(e)));
   }
 
   Future<Post> fetchPost(int id) async {
@@ -25,6 +25,6 @@ class APIService {
     Response response = await http.get(Uri.parse(
         'https://jsonplaceholder.typicode.com/posts/$postId/comments/'));
     Iterable iterable = json.decode(response.body);
-    return List<Comment>.from(iterable.map((model) => Comment.fromJson(model)));
+    return List<Comment>.from(iterable.map((e) => Comment.fromJson(e)));
   }
 }
