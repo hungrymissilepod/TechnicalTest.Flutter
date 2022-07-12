@@ -29,7 +29,6 @@ class CommentPageView extends StatelessWidget {
                   child: ListView.separated(
                     itemCount: model.comments.length,
                     itemBuilder: (BuildContext context, int index) {
-                      // return Text(model.comments[index].name ?? '');
                       return CommentTile(comment: model.comments[index]);
                     },
                     separatorBuilder: (BuildContext context, int index) {
