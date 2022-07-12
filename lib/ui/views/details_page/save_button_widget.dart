@@ -33,9 +33,11 @@ class SaveButton extends StatelessWidget {
         if (post == null) {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text('Error saving post')));
+          return;
         } else if (hasPost) {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Post alredy downloaded')));
+          return;
         }
         context.read<SavedPosts>().addSavedPost(post!);
       },
