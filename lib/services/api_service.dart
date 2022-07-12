@@ -21,7 +21,7 @@ class APIService {
     return Post.fromJson(json.decode(response.body));
   }
 
-  Future<List<Comment>> fetchCommentsForPost(int postId) async {
+  Future<List<Comment>> fetchCommentsForPost(int? postId) async {
     Response response = await http.get(Uri.parse(
         'https://jsonplaceholder.typicode.com/posts/$postId/comments/'));
     Iterable iterable = json.decode(response.body);

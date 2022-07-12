@@ -1,4 +1,5 @@
 import 'package:flutter_tech_task/providers/saved_posts_provider.dart';
+import 'package:flutter_tech_task/ui/views/list_page/post_tile_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter/material.dart';
@@ -33,18 +34,8 @@ class _DetailsPageViewState extends State<DetailsPageView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        model.post?.title ?? '',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        model.post?.body ?? '',
-                        style: const TextStyle(fontSize: 14),
+                      PostTile(
+                        post: model.post,
                       ),
                       const SizedBox(height: 20),
                       Center(
@@ -67,19 +58,13 @@ class _DetailsPageViewState extends State<DetailsPageView> {
                                 ),
                               ),
                             ),
-                            TextButton(
-                              child: const Text('delete'),
-                              onPressed: () {
-                                context.read<SavedPosts>().delete();
-                              },
-                            ),
                             Consumer<SavedPosts>(
                               builder: (context, prefs, child) {
                                 bool? hasPost =
                                     prefs.isPostAlredySaved(model.post?.id);
                                 return TextButton(
                                   child: Text(
-                                    hasPost! ? 'Saved' : 'Save For Offline',
+                                    hasPost ? 'Saved' : 'Save For Offline',
                                     style: const TextStyle(
                                       color: Colors.red,
                                     ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tech_task/models/comment.dart';
 import 'package:flutter_tech_task/ui/views/comment_page/comment_page_viewmodel.dart';
+import 'package:flutter_tech_task/ui/views/comment_page/comment_tile_widget.dart';
 import 'package:stacked/stacked.dart';
 
 class CommentPageView extends StatelessWidget {
@@ -19,10 +19,8 @@ class CommentPageView extends StatelessWidget {
       builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            // TODO: could show post title in app bar title?
-            title: Text('Comments'),
+            title: const Text('Comments'),
           ),
-          // TODO: display all comments in listview.builder
           body: model.comments.isNotEmpty
               ? Container(
                   padding: const EdgeInsets.all(15),
@@ -47,38 +45,6 @@ class CommentPageView extends StatelessWidget {
               : const Center(child: CircularProgressIndicator()),
         );
       },
-    );
-  }
-}
-
-class CommentTile extends StatelessWidget {
-  const CommentTile({required this.comment, Key? key}) : super(key: key);
-
-  final Comment comment;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          comment.email ?? 'Email',
-          style: const TextStyle(
-            color: Colors.grey,
-            fontSize: 14,
-          ),
-        ),
-        Text(
-          comment.name ?? 'Name',
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(comment.body ?? 'Body'),
-      ],
     );
   }
 }
