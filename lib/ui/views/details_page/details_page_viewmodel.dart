@@ -10,7 +10,8 @@ class DetailsPageViewModel extends BaseViewModel {
   Post? get post => _post;
 
   Future<void> fetchPost(int id) async {
+    setBusy(true);
     _post = await _apiService.fetchPost(id);
-    notifyListeners();
+    setBusy(false);
   }
 }

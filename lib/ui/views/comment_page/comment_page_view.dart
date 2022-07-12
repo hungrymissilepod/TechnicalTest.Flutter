@@ -21,27 +21,31 @@ class CommentPageView extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Comments'),
           ),
-          body: model.comments.isNotEmpty
-              ? Container(
-                  padding: const EdgeInsets.all(15),
-                  child: ListView.separated(
-                    itemCount: model.comments.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CommentTile(comment: model.comments[index]);
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          Container(height: 10),
-                          const Divider(
-                            thickness: 1,
-                            color: Colors.grey,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                )
+          body: !model.isBusy
+              ? model.comments.isNotEmpty
+                  ? Container(
+                      padding: const EdgeInsets.all(15),
+                      child: ListView.separated(
+                        itemCount: model.comments.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return CommentTile(comment: model.comments[index]);
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Column(
+                            children: [
+                              Container(height: 10),
+                              const Divider(
+                                thickness: 1,
+                                color: Colors.grey,
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    )
+                  : const Center(
+                      child: Text('No comments on this post'),
+                    )
               : const Center(child: CircularProgressIndicator()),
         );
       },

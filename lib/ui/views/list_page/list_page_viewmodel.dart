@@ -10,7 +10,8 @@ class ListPageViewModel extends BaseViewModel {
   List<Post> get posts => _posts;
 
   Future<void> fetchAllPosts() async {
+    setBusy(true);
     _posts = await _apiService.fetchAllPosts();
-    notifyListeners();
+    setBusy(false);
   }
 }
