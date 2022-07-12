@@ -49,6 +49,8 @@ class _DetailsPageViewState extends State<DetailsPageView> {
                                     arguments: {'id': postId ?? 0});
                               },
                               style: ButtonStyle(
+                                overlayColor: MaterialStateColor.resolveWith(
+                                    (states) => Colors.blue.withOpacity(0.2)),
                                 shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
@@ -63,11 +65,22 @@ class _DetailsPageViewState extends State<DetailsPageView> {
                                 bool? hasPost =
                                     prefs.isPostAlredySaved(model.post?.id);
                                 return TextButton(
-                                  child: Text(
-                                    hasPost ? 'Saved' : 'Save For Offline',
-                                    style: const TextStyle(
-                                      color: Colors.red,
-                                    ),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        hasPost ? 'Saved' : 'Save For Offline',
+                                        style: const TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Icon(
+                                        hasPost ? Icons.check : Icons.download,
+                                        color: Colors.red,
+                                      ),
+                                    ],
                                   ),
                                   onPressed: () {
                                     context
@@ -75,6 +88,10 @@ class _DetailsPageViewState extends State<DetailsPageView> {
                                         .addSavedPost(model.post!);
                                   },
                                   style: ButtonStyle(
+                                    overlayColor:
+                                        MaterialStateColor.resolveWith(
+                                            (states) =>
+                                                Colors.red.withOpacity(0.2)),
                                     shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
